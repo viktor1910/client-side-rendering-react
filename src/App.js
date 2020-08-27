@@ -1,7 +1,23 @@
 import React from "react";
-
-function App() {
-  return <div className="App">Working</div>;
+import { connect } from "react-redux";
+import { toggleStatus } from "./functionals/common/commonAction";
+function App(props) {
+  const { toggleStatus, status } = props;
+  return (
+    <div className="App">
+      <button onClick={toggleStatus}>Toogle status</button>
+      {status && <p>Toogle done</p>}
+    </div>
+  );
 }
-
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    status: state.commonReducer.status,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleStatus: () => dispatch(toggleStatus()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
